@@ -1,0 +1,23 @@
+
+.pagination {
+  display: flex;
+  padding-top: 0.25rem;
+}
+
+.pagination-item {
+  border-radius: 5px;
+  background-color: #efe5d4;
+  border: 1px solid #9a9a9a;
+  padding: 0.25rem;
+  height: 2rem;
+  width: 2rem;
+  margin-right: 0.5rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.current-item {
+    background-color: #e6b45f;
+  }
+}
