@@ -1,4 +1,5 @@
 import './pagination.scss';
+import {memo} from "react";
 
 type PaginationProps = {
     totalPages: [],
@@ -6,7 +7,10 @@ type PaginationProps = {
     onClick: (n: number) => void
 }
 
-export default function Pagination(props: PaginationProps) {
+const Pagination = memo((props: PaginationProps) => {
+
+    console.log('Pagination render');
+
     const { totalPages, currentPage, onClick } = props;
 
     return (
@@ -24,4 +28,5 @@ export default function Pagination(props: PaginationProps) {
         </>
     )
 
-}
+});
+export default Pagination;

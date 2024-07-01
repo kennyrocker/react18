@@ -1,6 +1,7 @@
 import {useAppContext} from "../../context/appContext";
+import {memo} from "react";
 
-export default function Detail() {
+const DetailPage = memo(() => {
     const { fullPage } = useAppContext();
 
     return (
@@ -8,4 +9,5 @@ export default function Detail() {
             {JSON.stringify(fullPage)}
         </div>
     )
-}
+});
+export default DetailPage;

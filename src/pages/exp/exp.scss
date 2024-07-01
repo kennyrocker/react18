@@ -1,0 +1,16 @@
+.exp {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.top {
+  flex-basis: 100%;
+}
+
+.left {
+  flex-basis: 50%;
+}
+
+.right {
+  flex-basis: 50%;
+}

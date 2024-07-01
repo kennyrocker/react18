@@ -2,19 +2,18 @@ import {createContext, useState, useContext} from "react";
 import {Job} from "../data/job";
 import {Filter} from "../components/search/search";
 
-
-type SearchT = {
-    filter: Filter;
-    results: Job[];
+type SearchResults = {
+    jobs: Job[];
+    filters: Filter;
 }
 
 type AppContextT = {
     fullPage: Job;
     shortList: Job[];
-    cacheSearch: SearchT;
+    cacheSearch: SearchResults
     addToShortList: (job:Job) => void;
     showFullPage: (job: Job) => void;
-    setCacheSearch: (search: SearchT) => void;
+    cacheSearchResults: (searchResults: SearchResults) => void;
 }
 
 const AppContext = createContext<AppContextT | undefined>(undefined);
@@ -24,7 +23,7 @@ export const AppContextProvider = ({ children }) => {
     const [shortList, setShortList] = useState([]);
     const [fullPage, setFullPage] = useState();
 
-    const [cacheSearch, setSearchResults] = useState();
+    const [cacheSearch, setSearchResults] = useState<SearchResults | undefined>();
 
     const addToShortList = (item: Job) => {
         if (shortList.find(i => i.id === item.id)){
@@ -37,13 +36,13 @@ export const AppContextProvider = ({ children }) => {
         setFullPage(job);
     }
 
-    const setCacheSearch = (search: SearchT) => {
+    const cacheSearchResults = (search: SearchResults) => {
         setSearchResults(search);
     }
 
     return (
         <AppContext.Provider
-            value={ { shortList, fullPage, cacheSearch, addToShortList, showFullPage, setCacheSearch } }>
+            value={ { shortList, fullPage, cacheSearch,  addToShortList, showFullPage, cacheSearchResults } }>
             {children}
         </AppContext.Provider>
     )

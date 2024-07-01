@@ -1,4 +1,5 @@
 import './search.scss';
+import {memo} from "react";
 
 export type Filter = {
     terms: string;
@@ -11,11 +12,13 @@ type SearchProps = {
     onSearch: (filter: Filter) => void;
 }
 
-export default function Search(props: SearchProps) {
+const Search = memo((props: SearchProps) => {
+
+    console.log('search render');
 
     let filters: Filter = {
         terms: "",
-        minSalary: 700000,
+        minSalary: 70000,
         jobType: "fulltime",
         remote: "hybrid"
     }
@@ -34,8 +37,8 @@ export default function Search(props: SearchProps) {
             <input className="terms" id="terms" type="text"
                    placeholder="search terms" onChange={patchFilter}/>
 
-            <select name="salary" id="salary" onChange={patchFilter}>
-                <option value="700000">$70,000+</option>
+            <select name="minSalary" id="minSalary" onChange={patchFilter}>
+                <option value="70000">$70,000+</option>
                 <option value="100000">$100,000+</option>
                 <option value="130000">$130,000+</option>
                 <option value="150000">$150,000+</option>
@@ -55,4 +58,5 @@ export default function Search(props: SearchProps) {
             <button onClick={getFilter}>Search</button>
         </div>
     )
-}
+});
+export default Search;
