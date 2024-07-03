@@ -23,7 +23,8 @@ const Search = memo((props: SearchProps) => {
         remote: "hybrid"
     }
 
-    const patchFilter = (e) => {
+    const patchFilter = (e: any) => {
+        //@ts-ignore
         filters[e.target.id] = e.target.value;
     }
 

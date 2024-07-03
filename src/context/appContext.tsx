@@ -1,4 +1,4 @@
-import {createContext, useState, useContext} from "react";
+import React, {createContext, useState, useContext, ReactNode} from "react";
 import {Job} from "../data/job";
 import {Filter} from "../components/search/search";
 
@@ -8,9 +8,9 @@ type SearchResults = {
 }
 
 type AppContextT = {
-    fullPage: Job;
-    shortList: Job[];
-    cacheSearch: SearchResults
+    fullPage: Job | undefined;
+    shortList: Job[] | [];
+    cacheSearch: SearchResults | undefined;
     addToShortList: (job:Job) => void;
     showFullPage: (job: Job) => void;
     cacheSearchResults: (searchResults: SearchResults) => void;
@@ -18,15 +18,19 @@ type AppContextT = {
 
 const AppContext = createContext<AppContextT | undefined>(undefined);
 
-export const AppContextProvider = ({ children }) => {
+interface AppContextProviderProps {
+    children: ReactNode;
+}
 
-    const [shortList, setShortList] = useState([]);
-    const [fullPage, setFullPage] = useState();
+export const AppContextProvider: React.FC<AppContextProviderProps> = ({ children }) => {
 
-    const [cacheSearch, setSearchResults] = useState<SearchResults | undefined>();
+     const [shortList, setShortList] = useState<Job[] | []>([]);
+    const [fullPage, setFullPage] = useState<Job | undefined>(undefined);
+
+    const [cacheSearch, setSearchResults] = useState<SearchResults | undefined>(undefined);
 
     const addToShortList = (item: Job) => {
-        if (shortList.find(i => i.id === item.id)){
+        if (shortList.find((i: Job) => i.id === item.id)){
             return;
         }
         setShortList([...shortList, item]);

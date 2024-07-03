@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import './header.scss'
 import {useAppContext} from "../../context/appContext";
-import Login from "../login/login";
+// import Login from "../login/login";
 
 export function Header() {
 
@@ -9,7 +9,7 @@ export function Header() {
 
     return (
 
-        <div className="header">
+        <div className="header" role="banner">
             <div className="logo">
                 Job Hunting
             </div>

@@ -2,8 +2,7 @@ import {useState, useCallback, memo, useEffect} from 'react';
 import {Job} from '../../data/job'
 import {jobs} from '../../data/jobs.json'
 import './home.scss';
-import Search from "../../components/search/search";
-import Filter from '../../components/search/search';
+import Search, {Filter} from "../../components/search/search";
 import Detail from "../../components/detail/detail";
 import JobList from "../../components/joblist/jobList";
 import {useAppContext} from "../../context/appContext";
@@ -11,9 +10,9 @@ import {useAppContext} from "../../context/appContext";
 const Home = memo(() => {
     console.log('home render');
 
-    const [ filter, setFilters ] = useState<Filter>(null);
-    const [ jobList, setJobList ] = useState<Job[]>([]);
-    const [ detail, setDetail ] = useState<Job>(null);
+    const [ filter, setFilters ] = useState<Filter| null>(null);
+    const [ jobList, setJobList ] = useState<Job[] | []>([]);
+    const [ detail, setDetail ] = useState<Job | null>(null);
     const { cacheSearch, cacheSearchResults } = useAppContext();
 
 
@@ -31,7 +30,9 @@ const Home = memo(() => {
         const randomStart = Math.floor(Math.random() * 4);
         const randomEnd = Math.floor(Math.random() * 4) + 4;
         let fetchJobs = await reference.splice(randomStart, randomEnd);
-        await setJobList(fetchJobs);
+        // @ts-ignore
+        await setJobList(fetchJobs as Job[]);
+        // @ts-ignore
         await cacheSearchResults({ jobs: fetchJobs, filters: filter });
     }
 
@@ -43,13 +44,14 @@ const Home = memo(() => {
     }, [])
 
     return (
-        <div className="page">
+        <div className="page" role="content">
 
             <div className="filter">
                 <Search onSearch={search}></Search>
             </div>
 
             <div className="list">
+                {/* @ts-ignore */}
                 <JobList jobs={jobList} onItemClick={detailClicked} filter={filter}/>
             </div>
 

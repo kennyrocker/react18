@@ -1,17 +1,23 @@
-
 import {memo, useCallback, useEffect, useState} from "react";
 import {formatCurrency} from "../../utils/util";
 import {Job} from "../../data/job";
 import Pagination from "../pagination/pagination";
 import JobTile from "../jobtile/jobtile";
 import "./jobList.scss";
+import {Filter} from "../search/search";
 
+type JobListT = {
+    jobs: Job[],
+    filter: Filter,
+    onItemClick: (item: Job) => void
+}
+const JobList = memo((props: JobListT) => {
 
-const JobList = memo(({ jobs, onItemClick, filter }) => {
+    const { jobs, filter, onItemClick } = props;
     console.log('JobList render');
 
     const [ currentWindow, setCurrentWindow ] = useState<Job[] | undefined>(undefined);
-    const [ totalPages, setTotalPages] = useState([]);
+    const [ totalPages, setTotalPages] = useState<number[] | []>([]);
     const [ currentPage, setCurrentPage ] = useState(0);
     const PAGE_SIZE = Math.floor(( window.innerHeight - 207 ) / 184) === 0 ? 1 : Math.floor(( window.innerHeight - 207 ) / 184);
 

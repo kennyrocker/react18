@@ -2,7 +2,7 @@ import './pagination.scss';
 import {memo} from "react";
 
 type PaginationProps = {
-    totalPages: [],
+    totalPages: number[] | [],
     currentPage: number,
     onClick: (n: number) => void
 }
