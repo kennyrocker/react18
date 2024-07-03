@@ -7,7 +7,7 @@ export const useWindowHeight = () => {
 
     const [height, setHeight] = useState(window.innerHeight);
 
-    const getWindowHeight = (e) => {
+    const getWindowHeight = () => {
         setHeight(window.innerHeight);
     }
 

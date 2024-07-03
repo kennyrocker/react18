@@ -28,7 +28,9 @@ const Exp = memo(() => {
         const reference = [ ...jobs ];
         const randomStart = Math.floor(Math.random() * 4);
         const randomEnd = Math.floor(Math.random() * 4) + 4;
+        // @ts-ignore
         let fetchJobs = await reference.splice(randomStart, randomEnd);
+        // @ts-ignore
         await setData(fetchJobs);
     }
 
@@ -38,6 +40,7 @@ const Exp = memo(() => {
                 <Search onSearch={filterChange}/>
             </div>
             <div className="left">
+                {/* @ts-ignore */}
                 <JobList jobs={data} onItemClick={itemClick} filter={filter}/>
             </div>
             <div className="right">

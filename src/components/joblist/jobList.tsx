@@ -48,7 +48,7 @@ const JobList = memo((props: JobListT) => {
     const initPagination = () => {
         if (jobs.length > PAGE_SIZE) {
             let total = Math.ceil(jobs.length / PAGE_SIZE);
-            const temp = [];
+            const temp: number[] = [];
             for (let i = 1; i <= total; i++) {
                 temp.push(i);
             }

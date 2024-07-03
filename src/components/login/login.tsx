@@ -9,7 +9,7 @@ export default function Login() {
 
     const [form, setForm] = useState<LoginForm>({ username: '', password: '' });
 
-    const handleForm = (event) => {
+    const handleForm = (event: any) => {
         setForm({
             ...form,
             [event.target.id]: event.target.value
