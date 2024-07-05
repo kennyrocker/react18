@@ -1,6 +1,8 @@
 import {Job} from "../../data/job";
-import {useAppContext} from "../../context/appContext";
 import {memo} from "react";
+import {addToShortList} from "../../redux/slices/jobSlice";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../redux/store";
 
 
 type DetailProps = {
@@ -11,14 +13,14 @@ const Detail = memo((props: DetailProps) => {
 
     console.log("Detail render")
 
-    const { addToShortList } = useAppContext();
+    const dispatch = useDispatch<AppDispatch>();
 
     return (
         <div className="job-detail">
             <div>{ props.job.company }</div>
             <div>{ props.job.title }</div>
             <div>{ props.job.type }</div>
-            <button onClick={() =>{ addToShortList(props.job) }}>Add To Short List</button>
+            <button onClick={() => dispatch(addToShortList(props.job)) }>Add To Short List</button>
         </div>
     )
 });

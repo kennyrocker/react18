@@ -1,8 +1,9 @@
-import {useAppContext} from "../../context/appContext";
 import {memo} from "react";
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
 
 const DetailPage = memo(() => {
-    const { fullPage } = useAppContext();
+    const fullPage = useSelector((state: RootState) => state.job.fullPage);
 
     return (
         <div className="page">

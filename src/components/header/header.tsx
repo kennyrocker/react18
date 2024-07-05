@@ -1,11 +1,12 @@
 import {NavLink} from "react-router-dom";
 import './header.scss'
-import {useAppContext} from "../../context/appContext";
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
 // import Login from "../login/login";
 
 export function Header() {
 
-    const { shortList } = useAppContext();
+    const shortList  = useSelector((state: RootState) => state.job.shortList);
 
     return (
 

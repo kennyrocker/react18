@@ -2,7 +2,7 @@
 
 React 18 case study, function components and hocks
 
-- Context Version - master branch
+- Context Version - main branch
 - Redux Version   - redux branch
 
 ## Run

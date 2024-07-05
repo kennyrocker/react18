@@ -5,7 +5,9 @@ import './home.scss';
 import Search, {Filter} from "../../components/search/search";
 import Detail from "../../components/detail/detail";
 import JobList from "../../components/joblist/jobList";
-import {useAppContext} from "../../context/appContext";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../../redux/store";
+import {setCacheSearch} from "../../redux/slices/jobSlice";
 
 const Home = memo(() => {
     console.log('home render');
@@ -13,7 +15,9 @@ const Home = memo(() => {
     const [ filter, setFilters ] = useState<Filter| null>(null);
     const [ jobList, setJobList ] = useState<Job[] | []>([]);
     const [ detail, setDetail ] = useState<Job | null>(null);
-    const { cacheSearch, cacheSearchResults } = useAppContext();
+
+    const cacheSearch = useSelector((state: RootState) => state.job.cacheSearch);
+    const dispatch = useDispatch<AppDispatch>();
 
 
     const detailClicked = useCallback((job: Job) => {
@@ -33,7 +37,8 @@ const Home = memo(() => {
         // @ts-ignore
         await setJobList(fetchJobs as Job[]);
         // @ts-ignore
-        await cacheSearchResults({ jobs: fetchJobs, filters: filter });
+        // await cacheSearchResults({ jobs: fetchJobs, filters: filter });
+        await dispatch(setCacheSearch({ jobs: fetchJobs, filters: filter }));
     }
 
     useEffect(() => {

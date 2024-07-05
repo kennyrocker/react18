@@ -1,16 +1,19 @@
 import {useNavigate} from 'react-router-dom';
-import {useAppContext} from "../../context/appContext";
 import {Job} from "../../data/job";
 import JobTile from "../../components/jobtile/jobtile";
+import {useDispatch, useSelector} from "react-redux";
+import {setFullPage} from "../../redux/slices/jobSlice";
+import {AppDispatch, RootState} from "../../redux/store";
 
 
 export default function Shortlisted() {
+    const shortList = useSelector((state:RootState) => state.job.shortList);
+    const dispatch = useDispatch<AppDispatch>();
 
-    const { shortList, showFullPage } = useAppContext();
     const nav = useNavigate();
 
     const openInDetailPage = (job: Job) => {
-        showFullPage(job);
+        dispatch(setFullPage(job));
         nav(`/detail/${job.id}`);
     }
 
