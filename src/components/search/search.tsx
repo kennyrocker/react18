@@ -24,8 +24,9 @@ const Search = memo((props: SearchProps) => {
     }
 
     const patchFilter = (e: any) => {
-        //@ts-ignore
-        filters[e.target.id] = e.target.value;
+        const field = e.target.id;
+        const value = e.target.value;
+        filters[field] = value;
     }
 
     const getFilter = () => {

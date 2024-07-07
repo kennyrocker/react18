@@ -1,8 +1,9 @@
 import {Job} from "../../data/job";
 import {Filter} from "../../components/search/search";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {jobSearchAsync} from "../thunks/job";
 
-type SearchResults = {
+interface SearchResults {
     jobs: Job[];
     filters: Filter;
 }
@@ -19,7 +20,8 @@ const initialState: JobSliceT = {
     cacheSearch: undefined
 }
 
-// @ts-ignore
+
+//@ts-ignore
 const jobSlice = createSlice({
     name: "job",
     initialState,
@@ -28,17 +30,23 @@ const jobSlice = createSlice({
             for (let i = 0; i < state.shortList.length; i++) {
                 if (state.shortList[i].id === action.payload.id) return;
             }
+            //@ts-ignore
             state.shortList.push(action.payload);
-        },
-        setCacheSearch: (state, action: PayloadAction<SearchResults>)  => {
-            state.cacheSearch = action.payload;
         },
         setFullPage: (state, action: PayloadAction<Job>) => {
             state.fullPage = action.payload;
         }
+    },
+    extraReducers: builder => {
+        builder
+            .addCase(jobSearchAsync.pending, () => {
+                console.log("job search away .....");
+             })
+            .addCase(jobSearchAsync.fulfilled, (state, action) => {
+                state.cacheSearch = action.payload;
+            })
     }
 });
 
-export const { addToShortList, setCacheSearch, setFullPage } = jobSlice.actions;
-
+export const { addToShortList, setFullPage } = jobSlice.actions;
 export default jobSlice.reducer;

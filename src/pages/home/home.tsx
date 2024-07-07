@@ -1,13 +1,12 @@
 import {useState, useCallback, memo, useEffect} from 'react';
 import {Job} from '../../data/job'
-import {jobs} from '../../data/jobs.json'
 import './home.scss';
 import Search, {Filter} from "../../components/search/search";
 import Detail from "../../components/detail/detail";
 import JobList from "../../components/joblist/jobList";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../redux/store";
-import {setCacheSearch} from "../../redux/slices/jobSlice";
+import {jobSearchAsync} from "../../redux/thunks/job";
 
 const Home = memo(() => {
     console.log('home render');
@@ -26,27 +25,17 @@ const Home = memo(() => {
 
     const search = useCallback((filter: Filter) => {
         setFilters(filter);
-        fakeAPICall(filter);
+        dispatch(jobSearchAsync(filter));
     }, []);
 
-    const fakeAPICall = async(filter: Filter) =>{
-        const reference = [ ...jobs ];
-        const randomStart = Math.floor(Math.random() * 4);
-        const randomEnd = Math.floor(Math.random() * 4) + 4;
-        let fetchJobs = await reference.splice(randomStart, randomEnd);
-        // @ts-ignore
-        await setJobList(fetchJobs as Job[]);
-        // @ts-ignore
-        // await cacheSearchResults({ jobs: fetchJobs, filters: filter });
-        await dispatch(setCacheSearch({ jobs: fetchJobs, filters: filter }));
-    }
-
     useEffect(() => {
+        console.log('Home Effect AAA')
         if (cacheSearch) {
             setJobList(cacheSearch.jobs);
             setFilters(cacheSearch.filters);
+            console.log('Home Effect BBB')
         }
-    }, [])
+    }, [cacheSearch])
 
     return (
         <div className="page" role="content">
