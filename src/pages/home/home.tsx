@@ -11,11 +11,12 @@ import {jobSearchAsync} from "../../redux/thunks/job";
 const Home = memo(() => {
     console.log('home render');
 
-    const [ filter, setFilters ] = useState<Filter| null>(null);
+    const [ filter, setFilters ] = useState<Filter| undefined>(undefined);
     const [ jobList, setJobList ] = useState<Job[] | []>([]);
     const [ detail, setDetail ] = useState<Job | null>(null);
 
     const cacheSearch = useSelector((state: RootState) => state.job.cacheSearch);
+    const loading = useSelector((state: RootState) => state.job.loading);
     const dispatch = useDispatch<AppDispatch>();
 
 
@@ -45,8 +46,11 @@ const Home = memo(() => {
             </div>
 
             <div className="list">
-                {/* @ts-ignore */}
-                <JobList jobs={jobList} onItemClick={detailClicked} filter={filter}/>
+                {
+                    loading ?
+                       <div className="loading">loading...</div>
+                    :  <JobList jobs={jobList} onItemClick={detailClicked} filter={filter}/>
+                }
             </div>
 
             <div className="detail">

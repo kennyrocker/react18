@@ -8,7 +8,7 @@ import {Filter} from "../search/search";
 
 type JobListT = {
     jobs: Job[],
-    filter: Filter,
+    filter: Filter | undefined,
     onItemClick: (item: Job) => void
 }
 const JobList = memo((props: JobListT) => {
@@ -22,14 +22,11 @@ const JobList = memo((props: JobListT) => {
     const PAGE_SIZE = Math.floor(( window.innerHeight - 207 ) / 184) === 0 ? 1 : Math.floor(( window.innerHeight - 207 ) / 184);
 
     useEffect(() => {
-        console.log('AAA jobList Effect kicked in');
         if (jobs.length > 0) {
-            console.log('BBB jobList Effect kicked in');
             setPage(0);
             initPagination();
         }
     }, [jobs])
-
 
 
     const setPage = useCallback((page: number) => {
@@ -60,6 +57,7 @@ const JobList = memo((props: JobListT) => {
 
 
     const formatSearchTerms = () => {
+        if (!filter) return '';
         const terms = filter.terms ? filter.terms + ' ' : '';
         const type = filter.jobType ? filter.jobType + ' ' : '';
         const salary = filter.minSalary > 0 ? formatCurrency(filter.minSalary)+'+ ' : '';

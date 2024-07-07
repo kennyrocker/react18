@@ -12,12 +12,14 @@ type JobSliceT = {
     fullPage: Job | undefined;
     shortList: Job[] | [];
     cacheSearch: SearchResults | undefined;
+    loading: boolean;
 }
 
 const initialState: JobSliceT = {
     fullPage: undefined,
     shortList: [],
-    cacheSearch: undefined
+    cacheSearch: undefined,
+    loading: false
 }
 
 
@@ -39,11 +41,12 @@ const jobSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(jobSearchAsync.pending, () => {
-                console.log("job search away .....");
+            .addCase(jobSearchAsync.pending, (state:JobSliceT) => {
+                state.loading = true;
              })
-            .addCase(jobSearchAsync.fulfilled, (state, action) => {
+            .addCase(jobSearchAsync.fulfilled, (state:JobSliceT, action) => {
                 state.cacheSearch = action.payload;
+                state.loading = false;
             })
     }
 });
